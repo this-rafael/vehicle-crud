@@ -7,13 +7,13 @@ export type VehicleDocument = VehicleSchema & Document;
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
 })
 export class VehicleSchema {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   placa: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   chassi: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   renavam: string;
 
   @Prop({ required: true })
@@ -35,3 +35,16 @@ export class VehicleSchema {
 
 export const VehicleMongooseSchema =
   SchemaFactory.createForClass(VehicleSchema);
+
+VehicleMongooseSchema.index(
+  { placa: 1, deletedAt: 1 },
+  { unique: true, sparse: true },
+);
+VehicleMongooseSchema.index(
+  { chassi: 1, deletedAt: 1 },
+  { unique: true, sparse: true },
+);
+VehicleMongooseSchema.index(
+  { renavam: 1, deletedAt: 1 },
+  { unique: true, sparse: true },
+);

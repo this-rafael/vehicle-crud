@@ -11,6 +11,16 @@ export class MongooseVehicleRepository implements VehicleRepository {
     @InjectModel('Vehicle') private vehicleModel: Model<VehicleDocument>,
   ) {}
 
+  async delete(id: string): Promise<void> {
+    try {
+      await this.vehicleModel.updateOne({ _id: id }, { deletedAt: new Date() });
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error: unknown) {
+      throw new Error('Vehicle not found');
+    }
+  }
+
   async save(vehicle: Vehicle): Promise<Vehicle> {
     const created = new this.vehicleModel(vehicle);
     const doc = await created.save();
@@ -19,15 +29,15 @@ export class MongooseVehicleRepository implements VehicleRepository {
 
   async findById(id: string): Promise<Vehicle | null> {
     const doc = await this.vehicleModel
-      .findOne({ _id: id, deleted_at: null })
+      .findOne({ _id: id, deletedAt: null })
       .exec();
     return doc ? this.toDomain(doc) : null;
   }
 
   async findAll(): Promise<Vehicle[]> {
     const docs = await this.vehicleModel
-      .find({ deleted_at: null })
-      .sort({ created_at: -1 })
+      .find({ deletedAt: null })
+      .sort({ createdAt: -1 })
       .exec();
     return docs.map((doc) => this.toDomain(doc));
   }

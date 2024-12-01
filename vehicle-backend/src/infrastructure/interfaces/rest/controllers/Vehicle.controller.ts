@@ -1,10 +1,19 @@
-import { Controller, Post, Body, HttpStatus, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpStatus,
+  Get,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Vehicle } from '../../../../domain/vehicle/entities/Vehicle.entity';
 import { CreateVehicleDto } from '../../../../application/vehicle/dto/CreateVehicle.dto';
 import { CreateVehicleUseCase } from '../../../../application/vehicle/use-cases/CreateVehicle.use-case';
 import { GetVehicleUseCase } from '../../../../application/vehicle/use-cases/GetVehicle.use-case';
 import { ListAllVehiclesUseCase } from '../../../../application/vehicle/use-cases/ListAllVehicle.use-case';
+import { DeleteVehicleUseCase } from '../../../../application/vehicle/use-cases/DeleteVehicle.use-case';
 
 @ApiTags('vehicles')
 @Controller('vehicles')
@@ -13,6 +22,7 @@ export class VehicleController {
     private readonly createVehicleUseCase: CreateVehicleUseCase,
     private readonly getVehicleUseCase: GetVehicleUseCase,
     private readonly listAllVehicleUseCase: ListAllVehiclesUseCase,
+    private readonly deleteVehicleUseCase: DeleteVehicleUseCase,
   ) {}
 
   @Post()
@@ -43,5 +53,14 @@ export class VehicleController {
   })
   listAll(): Promise<Vehicle[]> {
     return this.listAllVehicleUseCase.execute();
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Deletar um veículo pelo ID' })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+  })
+  delete(@Param('id') id: string): Promise<void> {
+    return this.deleteVehicleUseCase.execute(id);
   }
 }

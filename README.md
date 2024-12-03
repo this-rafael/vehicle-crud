@@ -11,7 +11,7 @@ Projeto demonstrando o uso de NestJS para criar uma API RESTful de CRUD de veíc
 <video controls>
   <source src="./docs/video/demo.mp4" type="video/mp4">
 </video>
-
+[link do video caso o componente acima não renderize](https://github.com/this-rafael/vehicle-crud/raw/refs/heads/develop/docs/video/demo.mp4)
 
 ## Documentação especifica
 

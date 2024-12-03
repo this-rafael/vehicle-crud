@@ -1,0 +1,116 @@
+<div class="modal-body">
+    <form #vehicleForm="ngForm" novalidate>
+
+        <div class="mb-3">
+            <label for="placa" class="form-label">Placa</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="placa"
+                    [(ngModel)]="vehicle.placa"
+                    name="placa"
+                    required
+                    minlength="7"
+                    maxlength="7"
+                    #placa="ngModel"
+            />
+            <div *ngIf="placa.invalid && (placa.dirty || placa.touched)" class="text-danger">
+                <small *ngIf="placa.errors?.['required']">Placa é obrigatória.</small>
+                <small *ngIf="placa.errors?.['minlength'] || placa.errors?.['maxlength']">
+                    Placa deve ter 7 caracteres.
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="chassi" class="form-label">Chassi</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="chassi"
+                    [(ngModel)]="vehicle.chassi"
+                    name="chassi"
+                    required
+                    #chassi="ngModel"
+            />
+            <div *ngIf="chassi.invalid && (chassi.dirty || chassi.touched)" class="text-danger">
+                <small *ngIf="chassi.errors?.['required']">Chassi é obrigatório.</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="renavam" class="form-label">Renavam</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="renavam"
+                    [(ngModel)]="vehicle.renavam"
+                    name="renavam"
+                    required
+                    #renavam="ngModel"
+            />
+            <div *ngIf="renavam.invalid && (renavam.dirty || renavam.touched)" class="text-danger">
+                <small *ngIf="renavam.errors?.['required']">Renavam é obrigatório.</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="modelo" class="form-label">Modelo</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="modelo"
+                    [(ngModel)]="vehicle.modelo"
+                    name="modelo"
+                    required
+                    #modelo="ngModel"
+            />
+            <div *ngIf="modelo.invalid && (modelo.dirty || modelo.touched)" class="text-danger">
+                <small *ngIf="modelo.errors?.['required']">Modelo é obrigatório.</small>
+            </div>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="marca" class="form-label">Marca</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="marca"
+                    [(ngModel)]="vehicle.marca"
+                    name="marca"
+                    required
+                    #marca="ngModel"
+            />
+            <div *ngIf="marca.invalid && (marca.dirty || marca.touched)" class="text-danger">
+                <small *ngIf="marca.errors?.['required']">Marca é obrigatória.</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="ano" class="form-label">Ano</label>
+            <input
+                    type="number"
+                    class="form-control"
+                    id="ano"
+                    [(ngModel)]="vehicle.ano"
+                    name="ano"
+                    required
+                    min="1886"
+                    [max]="currentYear"
+                    #ano="ngModel"
+            />
+            <div *ngIf="ano.invalid && (ano.dirty || ano.touched)" class="text-danger">
+                <small *ngIf="ano.errors?.['required']">Ano é obrigatório.</small>
+                <small *ngIf="ano.errors?.['min'] || ano.errors?.['max']">
+                    Ano deve ser entre 1886 e {{ currentYear }}.
+                </small>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="delete()">Deletar</button>
+    <button type="button" class="btn btn-primary" [disabled]="vehicleForm.invalid" (click)="save()">Salvar</button>
+</div>

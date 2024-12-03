@@ -3,6 +3,7 @@ import { VehicleRepository } from '../../../domain/vehicle/repositories/Vehicle.
 import { Vehicle } from '../../../domain/vehicle/entities/Vehicle.entity';
 import { ISaveEntity } from '../../../domain/common/interfaces/ISaveEntity';
 import { CreateVehicleDto } from '../dto/CreateVehicle.dto';
+import { CannotCreateVehicleException } from '../../../domain/common/exceptions/CannotCreateVehicle.exception';
 
 @Injectable()
 export class CreateVehicleUseCase {
@@ -12,15 +13,22 @@ export class CreateVehicleUseCase {
   ) {}
 
   async execute(createDto: CreateVehicleDto): Promise<Vehicle> {
-    const vehicle = new Vehicle(
-      createDto.placa,
-      createDto.chassi,
-      createDto.renavam,
-      createDto.modelo,
-      createDto.marca,
-      createDto.ano,
-    );
+    try {
+      const vehicle = new Vehicle(
+        createDto.placa,
+        createDto.chassi,
+        createDto.renavam,
+        createDto.modelo,
+        createDto.marca,
+        createDto.ano,
+      );
 
-    return await this.vehicleRepository.save(vehicle);
+      return await this.vehicleRepository.save(vehicle);
+    } catch (e: any) {
+      throw new CannotCreateVehicleException(
+        JSON.stringify(createDto),
+        e.message,
+      );
+    }
   }
 }

@@ -1,18 +1,14 @@
 {
-    "$schema": "http://json.schemastore.org/swcrc",
-    "sourceMaps": true,
-    "jsc": {
-        "parser": {
-            "syntax": "typescript",
-            "decorators": true,
-            "dynamicImport": true
-        },
-        "transform": {
-            "legacyDecorator": true,
-            "decoratorMetadata": true
-        },
-        "baseUrl": "./",
-        "keepClassNames": true
+  "jsc": {
+    "parser": {
+      "syntax": "typescript"
     },
-    "minify": false
+    "target": "es2022",
+    "transform": {
+      "useDefineForClassFields": true
+    }
+  },
+  "module": {
+    "type": "commonjs"
+  }
 }

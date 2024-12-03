@@ -1,0 +1,67 @@
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Lista de Veículos</h2>
+        <button class="btn btn-success" routerLink="/create">Adicionar Veículo</button>
+    </div>
+
+    <div class="card p-3 mb-4">
+        <form class="row g-3">
+            <div class="col-md-4">
+                <label for="name" class="form-label">Nome do Veículo</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        [(ngModel)]="filters.nameLike"
+                        name="nameLike"
+                        placeholder="Digite o nome"
+                />
+            </div>
+            <div class="col-md-4">
+                <label for="brand" class="form-label">Marca</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="brand"
+                        [(ngModel)]="filters.brandLike"
+                        name="brandLike"
+                        placeholder="Digite a marca"
+                />
+            </div>
+            <div class="col-md-4">
+                <label for="year" class="form-label">Ano</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="year"
+                        [(ngModel)]="filters.year"
+                        name="year"
+                        placeholder="Digite o ano"
+                />
+            </div>
+            <div class="col-md-12 d-flex justify-content-between">
+                <button type="button" class="btn btn-primary" (click)="search()">Pesquisar</button>
+                <button type="button" class="btn btn-secondary" (click)="clearFilters()">Limpar Filtros</button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="vehicles.length === 0" class="text-center">
+        Nenhum veículo encontrado.
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let vehicle of vehicles">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ vehicle.modelo }}</h5>
+                    <app-vehicle-detail [vehicle]="vehicle"></app-vehicle-detail>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="loadMore()" *ngIf="vehicles.length < total">
+        Carregar Mais
+    </button>
+</div>

@@ -10,7 +10,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - mongo-data:/data/db
-      - ./mongo-init-scripts:/docker-entrypoint-initdb.d/
 
 volumes:
   mongo-data:

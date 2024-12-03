@@ -11,7 +11,7 @@ mongoose.set('debug', true);
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot('mongodb://admin:password@localhost:27017'),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     VehicleApplicationModule,
   ],
   controllers: [],
